@@ -1,5 +1,5 @@
 {
-  "name": "electron-reminder",
+  "productName": "Dota 2 Heroes Counter Pick",
   "version": "0.1.0",
   "private": true,
   "scripts": {

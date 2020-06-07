@@ -1,4 +1,4 @@
-# electron-reminder
+# Dota 2 Heroes Counter
 
 ## Project setup
 ```
