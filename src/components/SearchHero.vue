@@ -5,6 +5,7 @@
       focus:border-red-700 mb-6" type="text" placeholder="Search Hero" v-model="search" v-on:keyup="findHeroes">
 
     <div class="flex items-start ml-20" v-for="hero in results" :key="hero.id">
+        <router-link :to="'/about/' + hero.id">
         <div class="my-1 flex text-white">
             <img class="inline-block h-12 w-auto rounded-lg" :src="'http://cdn.dota2.com' + hero.img" alt="" />
             <span class="ml-2 text-white leading-6 font-semibold mr-2">{{ hero.localized_name }}</span>
@@ -14,6 +15,7 @@
             </ul>
             ]
         </div>
+        </router-link>
     </div>
 </div>
 </template>
