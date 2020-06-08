@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="vld-parent">
+     
     <h2 class="text-2xl font-bold leading-7 text-red-500 sm:text-3xl sm:leading-9 sm:truncate mb-8">
       Dota 2 Counter pick
     </h2>
@@ -15,6 +16,8 @@
           Good against
         </h2>
       </div>
+      <loading :active.sync="isLoading" 
+        :is-full-page="fullPage" color="#dc3545"></loading>
       <div class="my-1 flex text-white space-y-2 flex-wrap">
         <div v-for="(hero, index) in results" :key="hero.hero_id">
           <span v-if="index < 15">
@@ -31,10 +34,12 @@
     <button class="bg-transparent hover:bg-red-500 text-red-400 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
       <router-link to="/">Search Again</router-link>
     </button>
+    
   </div>
 </template>
 <script>
   import axios from 'axios';
+  import Loading from 'vue-loading-overlay';
   const heroes = require('@/assets/constants/heroes.json')
 
   export default {
@@ -47,8 +52,13 @@
         heroesId: this.$route.params.id,
         heroes: heroes,
         results: null,
+        isLoading: true,
+        fullPage: true
       };
     },
+    components: {
+          Loading
+      },
     computed: {
       hero() {
         var items = this.heroes;
@@ -59,6 +69,7 @@
       }
     },
     created() {
+      this.isLoading = true;
       axios.get(`https://api.opendota.com/api/heroes/` + this.heroesId + `/matchups`)
         .then(response => {
           var matchup = response.data;
@@ -83,14 +94,16 @@
           // });
 
           console.log(this.heroes[3]);
+          this.isLoading = false
 
           //console.log(this.heroes[1]);
         })
         .catch(e => {
           //this.errors.push(e)
           console.log(e)
-        })
+        this.isLoading = false
 
+        })
 
     }
   }
