@@ -17,7 +17,7 @@
         </h2>
       </div>
       <loading :active.sync="isLoading" 
-        :is-full-page="fullPage" color="#dc3545"></loading>
+        :is-full-page="fullPage" color="#28a745"></loading>
       <div class="my-1 flex text-white space-y-2 flex-wrap">
         <div v-for="(hero, index) in results" :key="hero.hero_id">
           <span v-if="index < 15">
@@ -30,7 +30,26 @@
         </div>
       </div>
     </div>
-
+    <div class="flex flex-col items-start">
+      <div>
+        <h2 class="text-sm font-semibold leading-7 text-red-600 sm:text-3xl sm:leading-9 sm:truncate mb-8">
+          Bad against
+        </h2>
+      </div>
+      <loading :active.sync="isLoading" 
+        :is-full-page="fullPage" color="#dc3545"></loading>
+      <div class="my-1 flex text-white space-y-2 flex-wrap">
+        <div v-for="(hero, index) in badResults" :key="hero.hero_id">
+          <span v-if="index < 15">
+            <img class="inline-block h-12 w-auto rounded-lg" :src="'http://cdn.dota2.com' + heroes[hero.hero_id].img" alt="" />
+            <div>
+              <span class="ml-2 text-white leading-6 font-semibold mr-2">{{ heroes[hero.hero_id].localized_name }}</span>
+              <span class="ml-2 text-white leading-6 font-semibold mr-2">{{ hero.percents }}</span>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
     <button class="bg-transparent hover:bg-red-500 text-red-400 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
       <router-link to="/">Search Again</router-link>
     </button>
@@ -52,7 +71,8 @@
         heroesId: this.$route.params.id,
         heroes: heroes,
         results: null,
-        isLoading: true,
+        badResults: null,
+        isLoading: false,
         fullPage: true
       };
     },
@@ -74,18 +94,22 @@
         .then(response => {
           var matchup = response.data;
           var result = {};
+          var badResult = {};
 
           Object.keys(matchup).forEach(key => {
             const item = matchup[key];
             if (item.games_played > 99) {
               var percents = item.wins / matchup[key].games_played * 100;
+              item["percents"] = percents.toFixed(2);
               if (percents > 50) {
-                item["percents"] = percents.toFixed(2);
                 result[key] = item;
+              }else{
+                badResult[key] = item;
               }
             }
           })
           this.results = result;
+          this.badResults = badResult;
           // var finalResult = [];
           // Object.keys(this.results).forEach(key => {
           //   finalResult.push(Object.keys(this.heroes)
