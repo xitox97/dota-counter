@@ -73,7 +73,8 @@
         results: null,
         badResults: null,
         isLoading: false,
-        fullPage: true
+        fullPage: true,
+        errorMesage: null,
       };
     },
     components: {
@@ -110,23 +111,11 @@
           })
           this.results = result;
           this.badResults = badResult;
-          // var finalResult = [];
-          // Object.keys(this.results).forEach(key => {
-          //   finalResult.push(Object.keys(this.heroes)
-          //   .map(key => this.heroes[key])
-          //   .filter(item => item.id == this.results[key]['hero_id']));
-          // });
-
-          console.log(this.heroes[3]);
-          this.isLoading = false
-
-          //console.log(this.heroes[1]);
+          this.isLoading = false;
         })
         .catch(e => {
-          //this.errors.push(e)
-          console.log(e)
-        this.isLoading = false
-
+          this.errorMesage = e;
+          this.isLoading = false;
         })
 
     }
