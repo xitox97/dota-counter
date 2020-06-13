@@ -10,7 +10,7 @@
         <p class="ml-2 text-white leading-6 font-semibold mt-2">{{ hero.localized_name }}</p>
       </div>
     </div>
-    <div class="flex flex-col items-start">
+    <div class="flex flex-col items-center">
       <div>
         <h2 class="text-sm font-semibold leading-7 text-green-600 sm:text-3xl sm:leading-9 sm:truncate mb-8">
           Good against
@@ -18,19 +18,19 @@
       </div>
       <loading :active.sync="isLoading" 
         :is-full-page="fullPage" color="#28a745"></loading>
-      <div class="my-1 flex text-white space-y-2 flex-wrap">
-        <div v-for="(hero, index) in results" :key="hero.hero_id">
-          <span v-if="index < 15">
-            <img class="inline-block h-12 w-auto rounded-lg" :src="'http://cdn.dota2.com' + heroes[hero.hero_id].img" alt="" />
+      <div class="my-1 flex text-white flex-wrap items-center space-x-2">
+        <div v-for="(hero, index) in results" :key="hero.hero_id" class="">
+          <span v-if="index < 20">
+            <img class="inline-block h-12 w-auto rounded" :src="'http://cdn.dota2.com' + heroes[hero.hero_id].img" alt="" />
             <div>
               <span class="ml-2 text-white leading-6 font-semibold mr-2">{{ heroes[hero.hero_id].localized_name }}</span>
-              <span class="ml-2 text-white leading-6 font-semibold mr-2">{{ hero.percents }}</span>
+              <p class="ml-2 text-white leading-6 font-semibold mr-2">{{ hero.percents }}</p>
             </div>
           </span>
         </div>
       </div>
     </div>
-    <div class="flex flex-col items-start">
+    <div class="flex flex-col items-center mt-4">
       <div>
         <h2 class="text-sm font-semibold leading-7 text-red-600 sm:text-3xl sm:leading-9 sm:truncate mb-8">
           Bad against
@@ -38,19 +38,19 @@
       </div>
       <loading :active.sync="isLoading" 
         :is-full-page="fullPage" color="#dc3545"></loading>
-      <div class="my-1 flex text-white space-y-2 flex-wrap">
+      <div class="my-1 flex text-white flex-wrap items-center space-x-2 justify-center">
         <div v-for="(hero, index) in badResults" :key="hero.hero_id">
-          <span v-if="index < 15">
-            <img class="inline-block h-12 w-auto rounded-lg" :src="'http://cdn.dota2.com' + heroes[hero.hero_id].img" alt="" />
+          <span v-if="index < 20">
+            <img class="inline-block h-12 w-auto rounded" :src="'http://cdn.dota2.com' + heroes[hero.hero_id].img" alt="" />
             <div>
               <span class="ml-2 text-white leading-6 font-semibold mr-2">{{ heroes[hero.hero_id].localized_name }}</span>
-              <span class="ml-2 text-white leading-6 font-semibold mr-2">{{ hero.percents }}</span>
+              <p class="ml-2 text-white leading-6 font-semibold mr-2">{{ hero.percents }}</p>
             </div>
           </span>
         </div>
       </div>
     </div>
-    <button class="bg-transparent hover:bg-red-500 text-red-400 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
+    <button class="mt-4 bg-transparent hover:bg-red-500 text-red-400 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
       <router-link to="/">Search Again</router-link>
     </button>
     
